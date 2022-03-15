@@ -48,7 +48,7 @@
 
             <div class="row justify-content-evenly">
                 <div class="col">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal">Ya,
+                    <button type="button" class="btn btn-primary ya" data-bs-toggle="modal" data-bs-target="#Modal">Ya,
                         sangat puas</button>
                 </div>
                 <div class="col">
@@ -73,17 +73,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title welcome">Peringatan</h5>
-                    <h5 class="modal-title ya">Good</h5>
+                    <h5 class="modal-title" id="modalTitle">Peringatan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="welcome">
+                    <div id="notice">
                         <p>Segala jenis informasi yang disampaikan tidak ditujukan untuk merugikan dan menyinggung pihak
                             manapun.</p>
-                    </div>
-                    <div class="ya">
-                        <p>Lanjutkan bekerja, Lebih giat dan jangan mengeluh!</p>
                     </div>
                     <div>
                         semoga hari anda menyenangkan
@@ -105,17 +101,18 @@
     <script>
         $(document).ready(function () {
             $('#Modal').modal('show');
-            $('.ya').hide();
-            $(".tidak:eq(1)").hide();
-            $(".tidak:eq(2)").hide();
-            console.log($(".tidak").length);//mengetahui jumlah kelas TIDAK
+            $(".tidak:eq(1), .tidak:eq(2)").hide();
+            //console.log($(".tidak").length);//mengetahui jumlah kelas TIDAK
+            $(".ya").click(function () {
+                console.log("Ya clicked");
+                $("#modalTitle").text("Good");
+                $("#notice").text("Lebih giat bekerja dan jangan mengeluh!");
+            });
             $(".tidak").click(function () {
                 var x = $(".tidak").index(this);
                 console.log(x);
                 $(".tidak:eq(" + x + ")").hide();
-                $('.ya').show();
-                $('.welcome').hide();
-                x = x + 1;
+                x++;
                 if (x > 2) { x = 0 }
                 $(".tidak:eq(" + x + ")").show();
             });
