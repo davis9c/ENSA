@@ -113,6 +113,8 @@
                 var x = $(".tidak").index(this);
                 console.log(x);
                 $(".tidak:eq(" + x + ")").hide();
+                $('.ya').show();
+                $('.welcome').hide();
                 x = x + 1;
                 if (x > 2) { x = 0 }
                 $(".tidak:eq(" + x + ")").show();
