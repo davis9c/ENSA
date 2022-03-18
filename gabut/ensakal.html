@@ -17,6 +17,20 @@
             padding-bottom: 100%;
             background-color: #e2edff;
         }
+
+        fieldset.scheduler-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 1.4em 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+
+        legend.scheduler-border {
+            font-size: 1.2em !important;
+            font-weight: bold !important;
+            text-align: left !important;
+        }
     </style>
     <!-- Jquery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -51,161 +65,126 @@
     <section class="jumbotron">
         <h1 class="display-4  text-center">Kalklator ENSA</h1>
         <div class="container">
+            <hr>
             <div class="row">
-                <hr>
-                <div class="col-sm-4">
-                    <div class="btn btn-warning btn-lg" id="cek_efisiensi_ensa">
-                        efisiensi
-                        <div id="result_efisiensi_ensa">0</div>%
+                <div class="col-auto">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Result</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Efisiensi (%)</td>
+                                <td>
+                                    <div type="text" id="result_efisiensi_ensa">0</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Konsum Lem (gram/pcs)</td>
+                                <td>
+                                    <div type="text" id="result_konsum_lem">0</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Hasil Baik (pcs)</td>
+                                <td>
+                                    <div type="text" id="result_hasilbaik">0</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Waste Ensa (%)</td>
+                                <td>
+                                    <div type="text" id="result_wasteensa">0</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-success" id="hitung">Hitung</button>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="btn btn-warning btn-lg" id="cek_konsum_lem">
-                        Konsum LEM
-                        <div id="result_konsum_lem">0</div>
-                    </div>
-                </div>
-                <hr>
             </div>
+            <hr>
             <div class="row">
-                <form class="col-sm-3">
-                    <div class="mb-3">
-                        <label for="ensa_counter" class="form-label">Perhitungan ENSA</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="ensa_counter" placeholder="11700"
-                                value="11700">
-                            <span class="input-group-text">pcs</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+
+                <form class="col-auto">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">ENSA Product</legend>
+                        <!-- ENSA COUNTER-->
+                        <div class="mb-3">
+                            <label for="ensa_counter" class="form-label">Perhitungan ENSA</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="ensa_counter" placeholder="11700"
+                                    value="9140">
+                                <span class="input-group-text">pcs</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="total_lem" class="form-label">Total Lem</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control text-right" id="total_lem" placeholder="6000"
-                                value="6000">
-                            <span class="input-group-text">grams</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+                        <!-- ENSA Lubang-->
+                        <div class="mb-3">
+                            <label for="p_lubang" class="form-label">Lubang</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="p_lubang" placeholder="10" value="35">
+                                <span class="input-group-text">pcs</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="sisa_lem" class="form-label">Lem Sisa</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control text-right" id="sisa_lem" placeholder="150"
-                                value="150">
-                            <span class="input-group-text">grams</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+                        <!-- ENSA Selegenje dan WL-->
+                        <div class="mb-3">
+                            <label for="p_swl" class="form-label">Selegenje dan WL</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control text-right" id="p_swl" placeholder="10"
+                                    value="207">
+                                <span class="input-group-text">pcs</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="waste_lem" class="form-label">Waste</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control text-right" id="waste_lem" placeholder="150"
-                                value="100">
-                            <span class="input-group-text">grams</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+                        <!-- ENSA Waktu operasional-->
+                        <div class="mb-3">
+                            <label for="waktu_operasional" class="form-label">Waktu Operasional</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="waktu_operasional" placeholder="390"
+                                    value="390">
+                                <span class="input-group-text">minutes</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="waktu_operasional" class="form-label">Waktu Operasional</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="waktu_operasional" placeholder="390"
-                                value="390">
-                            <span class="input-group-text">minutes</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
+                    </fieldset>
+
                 </form>
-                <form class="col-sm-3">
-                    <div class="mb-3">
-                        <label for="p_lubang" class="form-label">Lubang</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="p_lubang" placeholder="10" value="10">
-                            <span class="input-group-text">pcs</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+
+                <form class="col-auto">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Lem</legend>
+                        <!-- ENSA Total LEM-->
+                        <div class="mb-3">
+                            <label for="total_lem" class="form-label">Total Lem</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control text-right" id="total_lem" placeholder="6000"
+                                    value="7442">
+                                <span class="input-group-text">grams</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="p_swl" class="form-label">Selegenje dan WL</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control text-right" id="p_swl" placeholder="10" value="10">
-                            <span class="input-group-text">pcs</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+                        <!-- ENSA Sisa LEM-->
+                        <div class="mb-3">
+                            <label for="sisa_lem" class="form-label">Lem Sisa</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control text-right" id="sisa_lem" placeholder="150"
+                                    value="714">
+                                <span class="input-group-text">grams</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="leaf_uj" class="form-label">UJ</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="leaf_uj" placeholder="15" value="15">
-                            <span class="input-group-text">pcs</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
+                        <!-- ENSA Waste LEM-->
+                        <div class="mb-3">
+                            <label for="waste_lem" class="form-label">Waste Lem</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control text-right" id="waste_lem" placeholder="150"
+                                    value="100">
+                                <span class="input-group-text">grams</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="leaf_dsf" class="form-label">DSF</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="leaf_dsf" placeholder="15" value="15">
-                            <span class="input-group-text">pcs</span>
-                            <div class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                    </fieldset>
                 </form>
             </div>
-        </div>
     </section>
     <!--Jumbotron end-->
     <!--Modal Start-->
@@ -241,28 +220,34 @@
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            var efisiensi;
-            var ensa_counter = $("#ensa_counter").val();
-            var waktu_operasional = $("#waktu_operasional").val();
-            $("#cek_efisiensi_ensa").click(function () {
-                efisiensi = ($("#ensa_counter").val() / $("#waktu_operasional").val()) / 30;
-                console.log(efisiensi * 100);
-                $("#result_efisiensi_ensa").text(efisiensi * 100);
+            $("#hitung").click(function () {
+                kalkulasi();
             });
-            $("#cek_konsum_lem").click(function () {
+            $("input").change(function () {
+                kalkulasi();
+            });
+            function kalkulasi() {
+                let ensa_counter = parseInt($("#ensa_counter").val());
+                let waktu_operasional = parseInt($("#waktu_operasional").val());
                 let total_lem = parseInt($("#total_lem").val());
                 let sisa_lem = parseInt($("#sisa_lem").val());
                 let waste_lem = parseInt($("#waste_lem").val());
-                let lem = sisa_lem + waste_lem;
+
+                let produk_lubang = parseInt($("#p_lubang").val());
+                let produk_selewl = parseInt($("#p_swl").val());
+
+                let waste_produk = produk_lubang + produk_selewl;
+
                 let konsum_lem = (total_lem - (sisa_lem + waste_lem)) / ensa_counter;
+                let efisiensi = ((ensa_counter / waktu_operasional) / 30) * 100;
+                let hasil_baik = ensa_counter - (produk_lubang + produk_selewl);
+                let waste_ensa = (waste_produk / ensa_counter) * 100;
 
-                console.log(typeof total_lem);
-                console.log(typeof sisa_lem);
-                console.log(typeof waste_lem);
-
-                $("#result_konsum_lem").text(konsum_lem);
-            });
-
+                $("#result_efisiensi_ensa").text(efisiensi.toFixed(2));
+                $("#result_konsum_lem").text(konsum_lem.toFixed(2));
+                $("#result_hasilbaik").text(hasil_baik);
+                $("#result_wasteensa").text(waste_ensa.toFixed(2));
+            }
         });
     </script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
