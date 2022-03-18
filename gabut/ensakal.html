@@ -76,25 +76,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class="table-success" id="tr_efisiensi">
                                 <th>Efisiensi (%)</td>
                                 <td>
-                                    <div type="text" id="result_efisiensi_ensa">0</div>
+                                    <div type="text" id="result_efisiensi_ensa">0
+                                    </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-success" id="tr_konsum_lem">
                                 <th>Konsum Lem (gram/pcs)</td>
                                 <td>
                                     <div type="text" id="result_konsum_lem">0</div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-success" id="tr_hasil_baik">
                                 <th>Hasil Baik (pcs)</td>
                                 <td>
                                     <div type="text" id="result_hasilbaik">0</div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="table-success" id="tr_waste_ensa">
                                 <th>Waste Ensa (%)</td>
                                 <td>
                                     <div type="text" id="result_wasteensa">0</div>
@@ -118,7 +119,7 @@
                             <label for="ensa_counter" class="form-label">Perhitungan ENSA</label>
                             <div class="input-group">
                                 <input type="number" class="form-control" id="ensa_counter" placeholder="11700"
-                                    value="9140">
+                                    value="9140" maxlength="12400" minlength="0">
                                 <span class="input-group-text">pcs</span>
                             </div>
                         </div>
@@ -126,7 +127,8 @@
                         <div class="mb-3">
                             <label for="p_lubang" class="form-label">Lubang</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="p_lubang" placeholder="10" value="35">
+                                <input type="number" class="form-control" id="p_lubang" placeholder="10" value="35"
+                                    maxlength="12400" minlength="0">
                                 <span class="input-group-text">pcs</span>
                             </div>
                         </div>
@@ -135,7 +137,7 @@
                             <label for="p_swl" class="form-label">Selegenje dan WL</label>
                             <div class="input-group">
                                 <input type="number" class="form-control text-right" id="p_swl" placeholder="10"
-                                    value="207">
+                                    value="207" maxlength="">
                                 <span class="input-group-text">pcs</span>
                             </div>
                         </div>
@@ -189,20 +191,26 @@
     <!--Jumbotron end-->
     <!--Modal Start-->
     <!-- Modal -->
-    <div class="modal" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Peringatan</h5>
+                    <h5 class="modal-title">Selamat datang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="notice">
-                        <p>Segala jenis informasi yang disampaikan tidak ditujukan untuk merugikan dan menyinggung pihak
-                            manapun.</p>
+                    <div>
+                        <p>Aplikasi Kalkulator untung menghitung Efisiensi mesin ENSA.</p>
+                        <p>Menggunakan metode Client-Side Aplication, sehingga semua data yang diinputkan hanya dikelola
+                            ketika aplikasi berjalan dan di akses pengguna.</p>
+                        <p>Menggunakan HTML, CSS dan JavaScript sehingga aplikasi dapat diakses melalui browser, yang
+                            sejatinya browser sudah dapat berjalan di berbagai platform mobile maupun desktop.</p>
+                        <p>Di dukung beberapa vendor untuk mempermudah penulisan program seperti bootstrap dan Jquery.
+                        </p>
+                        <p>Dan dikembangkan oleh "Ajimedia" x "Davis Aji"</p>
                     </div>
                     <div>
-                        semoga hari anda menyenangkan
+                        <h5><b><i>~Have a Nice Day~</i></b></h5>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -220,6 +228,7 @@
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
+            $('#Modal').modal('show');
             $("#hitung").click(function () {
                 kalkulasi();
             });
@@ -238,10 +247,57 @@
 
                 let waste_produk = produk_lubang + produk_selewl;
 
-                let konsum_lem = (total_lem - (sisa_lem + waste_lem)) / ensa_counter;
+                //Rumus kalkulasi
                 let efisiensi = ((ensa_counter / waktu_operasional) / 30) * 100;
+                let konsum_lem = (total_lem - (sisa_lem + waste_lem)) / ensa_counter;
                 let hasil_baik = ensa_counter - (produk_lubang + produk_selewl);
                 let waste_ensa = (waste_produk / ensa_counter) * 100;
+
+
+
+                //cek efisiensi ENSA
+                if (efisiensi >= 75) {
+                    //efisiensi bagus
+                    $("#tr_efisiensi").attr("class", "table-success");
+                } else {
+                    //efisiensi rendah
+                    $("#tr_efisiensi").attr("class", "table-danger");
+                }
+
+                //cek konsum lem
+                if (konsum_lem < 0.8) {
+                    if (konsum_lem > 0.6) {
+                        //konsumlem bagus
+                        $("#tr_konsum_lem").attr("class", "table-success");
+                    } else {
+                        //konsumlem terlalu rendah
+                        $("#tr_konsum_lem").attr("class", "table-warning");
+                    }
+                } else {
+                    //konsumlem tinggi
+                    $("#tr_konsum_lem").attr("class", "table-danger");
+                }
+
+                //cek hasil baik
+                if (hasil_baik) {
+
+                }
+
+                //cek waste ensa
+                if (waste_ensa <= 1) {
+                    //Waste cukup baik
+                    $("#tr_waste_ensa").attr("class", "table-success");
+                } else {
+                    if (waste_ensa <= 5) {
+                        //hasil waspada
+                        $("#tr_waste_ensa").attr("class", "table-warning");
+                    } else {
+                        //hasil buruk
+                        $("#tr_waste_ensa").attr("class", "table-danger");
+                    }
+                }
+
+
 
                 $("#result_efisiensi_ensa").text(efisiensi.toFixed(2));
                 $("#result_konsum_lem").text(konsum_lem.toFixed(2));
