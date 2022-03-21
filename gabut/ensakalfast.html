@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +64,7 @@
     <!-- Nav Bar End -->
     <!--Jumbotron-->
     <section class="jumbotron">
-        <h1 class="display-4  text-center">Kalklator ENSA</h1>
+        <h1 class="display-4  text-center">Kalkulator ENSA</h1>
         <div class="container">
             <hr>
             <div class="row">
@@ -117,32 +118,20 @@
                         <!-- ENSA Waktu operasional-->
                         <div class="mb-3">
                             <label for="waktu_operasional" class="form-label">Waktu Operasional</label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" id="waktu_operasional" placeholder="0"
-                                    value="0">
-                                <span class="input-group-text">min</span>
+                            <div class="btn-group">
+                                <div class="btn btn-info" onclick="waktu_operasional(-1)">min</div>
+                                <div class="btn" id="sh_waktu_operasional">minutes</div>
+                                <div class="btn btn-success" onclick="waktu_operasional(1)">add</div>
                             </div>
+                            <input type="range" class="form-range" id="waktu_operasional" max="480" min="1" value="420">
                         </div>
+
                         <!-- ENSA COUNTER-->
                         <div class="mb-3">
                             <label for="ensa_counter" class="form-label">Perhitungan ENSA</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="ensa_counter" placeholder="0" value="0"
-                                    maxlength="0" minlength="0">
-                                <span class="input-group-text">pcs</span>
-                            </div>
-                        </div>
-                        <!-- ENSA Waste Daun-->
-                        <div class="mb-3">
-                            <label for="ensa_counter" class="form-label">Waste UJ dan SF</label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" id="ensa_wuj" placeholder="0" value="0"
-                                    maxlength="0" minlength="0">
-                                <span class="input-group-text">pcs</span>
-                            </div>
-                            <div class="input-group">
-                                <input type="number" class="form-control" id="ensa_wsf" placeholder="0" value="0"
-                                    maxlength="0" minlength="0">
+                                <input type="range" class="form-range" id="ensa_counter" maxlength="12400" minlength="1"
+                                    value="9300">
                                 <span class="input-group-text">pcs</span>
                             </div>
                         </div>
@@ -164,6 +153,7 @@
                                 <span class="input-group-text">pcs</span>
                             </div>
                         </div>
+
                     </fieldset>
 
                 </form>
@@ -214,18 +204,8 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <p>Aplikasi Kalkulator untuk menghitung Efisiensi mesin ENSA.</p>
-                        <p>Menggunakan metode Client-Side Aplication, sehingga semua data yang diinputkan hanya dikelola
-                            ketika aplikasi berjalan dan di akses pengguna.</p>
-                        <p>Menggunakan HTML, CSS dan JavaScript sehingga aplikasi dapat diakses melalui browser, yang
-                            sejatinya browser sudah dapat berjalan di berbagai platform mobile maupun desktop.</p>
-                        <p>Di dukung beberapa vendor untuk mempermudah penulisan program seperti bootstrap dan Jquery.
-                        </p>
-                        <br>
-                        <!--
-                            <a href="./ensakalfast.html" class="btn btn-link">Program baru</a>
-                        -->
-                        <br>
+                        <p>Aplikasi Kalkulator menghitung efisiensi ENSA dikembangkan dari app sebelumnya</p>
+                        <a href="./ensakal.html" class="btn btn-link">Program sebelumnya</a>
                         <p>Dan dikembangkan oleh "Ajimedia" x "Davis Aji"</p>
                     </div>
                     <div>
@@ -247,107 +227,64 @@
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            alert("ada perbaikan update formula dan beberapa baris koding untuk limitasi batas max dan min");
-            set_default();
-            $('#Modal').modal('show');
+            //$('#Modal').modal('show');
             $("#hitung").click(function () {
                 kalkulasi();
             });
-            $("input").change(function () {
-                kalkulasi();
+            $("#waktu_operasional").change(function () {
+                console.log($("#waktu_operasional").val());
+                $("#sh_waktu_operasional").text($("#waktu_operasional").val() + "/" + $("#waktu_operasional").attr("max"));
             });
-            {
-                //$(".increment").parent().children("");
-            }
-            function set_default() {
-
-                let date = new Date();
-                if (date.getDay() == 6) {
-                    $("#waktu_operasional").val(4.5 * 60)
-                    $("#ensa_counter").val(4.5 * 60 * 30)
-                } else {
-                    $("#waktu_operasional").val(6.5 * 60)
-                    $("#ensa_counter").val(6.5 * 60 * 30)
-                }
-
-                let ensa_counter = parseInt($("#ensa_counter").val());
-                let waktu_operasional = parseInt($("#waktu_operasional").val());
-                {//Limitasi Counter
-                    /*
-                    Kecepatan produksi ENSA berkisar 30~31pcs per menit
-                    Sedangkan lama waktu(menit) operasional ENSA berkisar 0 hingga 390 menit
-                    Dan dapat dirumuskan menjadi
-                    ::Mengetahui Produk 100% ensa
-                    CounterMax = Kecepatan_produksi * waktu_operasional
-                    ::
-                    */
-                    let counter_max = 30 * waktu_operasional;
-                    $("#ensa_counter").attr("maxlength", counter_max)
-                    if (0 < ensa_counter <= counter_max) {
-                        //kalkulasi mendekati akurat
-                    } else if (ensa_counter > counter_max) {
-                        //Kecepatan produksi ENSA melebihi 30pcs/menit
-                    }
-                }
-
-
-                $("#ensa_counter").attr({
-                    minlength: 1,
-                    // maxlength: default_waktu_operasional + 100,
-                    //value: default_waktu_operasional,
-                    //placeholder: default_waktu_operasional
-                });
-            }
 
             function kalkulasi() {
-                kalibrasi_val()
-                let ensa_counter = parseInt($("#ensa_counter").val());
-                let waktu_operasional = parseInt($("#waktu_operasional").val());
-                let total_lem = parseInt($("#total_lem").val());
-                let sisa_lem = parseInt($("#sisa_lem").val());
-                let waste_lem = parseInt($("#waste_lem").val());
 
-                let waste_uj = parseInt($("#ensa_wuj").val());
-                let waste_sf = parseInt($("#ensa_wsf").val());
+                //inisialisasi
+                {
+                    let ensa_counter = parseInt($("#ensa_counter").val());
+                    let waktu_operasional = parseInt($("#waktu_operasional").val());
+                    let total_lem = parseInt($("#total_lem").val());
+                    let sisa_lem = parseInt($("#sisa_lem").val());
+                    let waste_lem = parseInt($("#waste_lem").val());
 
-                let produk_lubang = parseInt($("#p_lubang").val());
-                let produk_selewl = parseInt($("#p_swl").val());
+                    let produk_lubang = parseInt($("#p_lubang").val());
+                    let produk_selewl = parseInt($("#p_swl").val());
 
-                let waste_produk = produk_lubang + produk_selewl;
+                    let waste_produk = produk_lubang + produk_selewl;
+                }
 
                 //Rumus kalkulasi
-                let efisiensi = ((ensa_counter / waktu_operasional) / 30) * 100;
-                let konsum_lem = (total_lem - (sisa_lem + waste_lem)) / ensa_counter;
-                let hasil_baik = ensa_counter - (produk_lubang + produk_selewl);
-
-                /*
-                perlu perbaikan
-                */
-                let waste_ensa = ((waste_sf + waste_uj) / ensa_counter) * 100;
-                //perbaiki sampai sini
-
+                {
+                    let efisiensi = ((ensa_counter / waktu_operasional) / 30) * 100;
+                    let konsum_lem = (total_lem - (sisa_lem + waste_lem)) / ensa_counter;
+                    let hasil_baik = ensa_counter - (produk_lubang + produk_selewl);
+                    let waste_ensa = (waste_produk / ensa_counter) * 100;
+                }
 
                 //cek efisiensi ENSA
-                if (efisiensi >= 75) {
-                    //efisiensi bagus
-                    $("#tr_efisiensi").attr("class", "table-success");
-                } else {
-                    //efisiensi rendah
-                    $("#tr_efisiensi").attr("class", "table-danger");
+                {
+                    if (efisiensi >= 75) {
+                        //efisiensi bagus
+                        $("#tr_efisiensi").attr("class", "table-success");
+                    } else {
+                        //efisiensi rendah
+                        $("#tr_efisiensi").attr("class", "table-danger");
+                    }
                 }
 
                 //cek konsum lem
-                if (konsum_lem < 0.8) {
-                    if (konsum_lem > 0.6) {
-                        //konsumlem bagus
-                        $("#tr_konsum_lem").attr("class", "table-success");
+                {
+                    if (konsum_lem < 0.8) {
+                        if (konsum_lem > 0.6) {
+                            //konsumlem bagus
+                            $("#tr_konsum_lem").attr("class", "table-success");
+                        } else {
+                            //konsumlem terlalu rendah
+                            $("#tr_konsum_lem").attr("class", "table-warning");
+                        }
                     } else {
-                        //konsumlem terlalu rendah
-                        $("#tr_konsum_lem").attr("class", "table-warning");
+                        //konsumlem tinggi
+                        $("#tr_konsum_lem").attr("class", "table-danger");
                     }
-                } else {
-                    //konsumlem tinggi
-                    $("#tr_konsum_lem").attr("class", "table-danger");
                 }
 
                 //cek hasil baik
@@ -356,65 +293,31 @@
                 }
 
                 //cek waste ensa
-                if (waste_ensa <= 1) {
-                    //Waste cukup baik
-                    $("#tr_waste_ensa").attr("class", "table-success");
-                } else {
-                    if (waste_ensa <= 5) {
-                        //hasil waspada
-                        $("#tr_waste_ensa").attr("class", "table-warning");
+                {
+                    if (waste_ensa <= 1) {
+                        //Waste cukup baik
+                        $("#tr_waste_ensa").attr("class", "table-success");
                     } else {
-                        //hasil buruk
-                        $("#tr_waste_ensa").attr("class", "table-danger");
+                        if (waste_ensa <= 5) {
+                            //hasil waspada
+                            $("#tr_waste_ensa").attr("class", "table-warning");
+                        } else {
+                            //hasil buruk
+                            $("#tr_waste_ensa").attr("class", "table-danger");
+                        }
                     }
                 }
-
-
 
                 $("#result_efisiensi_ensa").text(efisiensi.toFixed(2));
                 $("#result_konsum_lem").text(konsum_lem.toFixed(2));
                 $("#result_hasilbaik").text(hasil_baik);
                 $("#result_wasteensa").text(waste_ensa.toFixed(2));
             }
-            {
-
-            }
-            function kalibrasi_val() {
-                let ensa_counter = parseInt($("#ensa_counter").val());
-                let waktu_operasional = parseInt($("#waktu_operasional").val());
-                {//Limitasi Counter
-                    /*
-                    Kecepatan produksi ENSA berkisar 30~31pcs per menit
-                    Sedangkan lama waktu(menit) operasional ENSA berkisar 0 hingga 390 menit
-                    Dan dapat dirumuskan menjadi
-                    ::Mengetahui Produk 100% ensa
-                    CounterMax = Kecepatan_produksi * waktu_operasional
-                    ::
-                    */
-                    let counter_max = 30 * waktu_operasional;
-                    $("#ensa_counter").attr("maxlength", counter_max)
-                    if (0 < ensa_counter <= counter_max) {
-                        //kalkulasi mendekati akurat
-                    } else if (ensa_counter > counter_max) {
-                        //Kecepatan produksi ENSA melebihi 30pcs/menit
-                    }
-                }
-                {//Limitasi Waktu Operasional
-                    /*
-                    Batasan waktu operasional mengacu pada form OEE dengan ketentuan sebagai berikut
-                    Waktu sift normal selama 8 jam dan 5.5 jam untuk sift pendek
-                    Jam istirahat sebanyak 1 jam untuk sift normal dan 0.5 jam untuk sift pendek
-                    Durasi persiapan awal 10 menit dan persiapan akhir 20 menit
-                    */
-                    if (1 < waktu_operasional < 330) {
-                        //waktu operasional sesuai
-                    } else {
-                        //waktu operasional melebihi batas atau tidak sesuai dengan
-                    }
-                }
-
-            }
         });
+        function waktu_operasional(i) {
+            $("#waktu_operasional").val(i + parseInt($("#waktu_operasional").val()));
+            $("#sh_waktu_operasional").text($("#waktu_operasional").val() + "/" + $("#waktu_operasional").attr("max"));
+        }
     </script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
